@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daniel Praveen Bejjipalli — Creative Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ══════════════════════════════════════════
+       VARIABLES
+    ══════════════════════════════════════════ */
+    :root {
+      --bg:          #07060f;
+      --bg-2:        #0f0d1c;
+      --bg-card:     #13111f;
+      --purple:      #7c3aed;
+      --purple-mid:  #9d5cf6;
+      --purple-lt:   #c4b5fd;
+      --yellow:      #f59e0b;
+      --yellow-lt:   #fde68a;
+      --white:       #ffffff;
+      --offwhite:    #ede9fe;
+      --muted:       rgba(237,233,254,0.72);
+      --border:      rgba(124,58,237,0.2);
+      --grad-purple: linear-gradient(135deg,#5b21b6,#7c3aed,#a78bfa);
+      --grad-yellow: linear-gradient(135deg,#d97706,#f59e0b,#fde68a);
+      --trans:       cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    /* ══════════════════════════════════════════
+       RESET
+    ══════════════════════════════════════════ */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit}
+    img{display:block;width:100%;object-fit:cover}
+
+    /* ══════════════════════════════════════════
+       ANIMATED BG GRID
+    ══════════════════════════════════════════ */
+    body::before{
+      content:'';
+      position:fixed;inset:0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(124,58,237,0.04) 1px,transparent 1px);
+      background-size:60px 60px;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    /* ══════════════════════════════════════════
+       GLOW ORBS
+    ══════════════════════════════════════════ */
+    .orb{
+      position:fixed;border-radius:50%;
+      pointer-events:none;filter:blur(80px);z-index:0;
+    }
+    .orb-1{
+      width:500px;height:500px;
+      background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 70%);
+      top:-150px;right:-100px;
+    }
+    .orb-2{
+      width:400px;height:400px;
+      background:radial-gradient(circle,rgba(245,158,11,0.1),transparent 70%);
+      bottom:10%;left:-100px;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:18px 60px;
+      background:rgba(7,6,15,0.8);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo{
+      font-family:'Playfair Display',serif;
+      font-size:1.1rem;font-style:italic;
+      color:var(--white);letter-spacing:0.02em;
+    }
+    .nav-logo span{color:var(--yellow)}
+    .nav-right{display:flex;align-items:center;gap:28px}
+    .nav-link{
+      font-size:0.78rem;font-weight:500;
+      letter-spacing:0.14em;text-transform:uppercase;
+      color:var(--muted);transition:color 0.3s ease;
+    }
+    .nav-link:hover{color:var(--yellow)}
+    .nav-cta{
+      font-size:0.78rem;font-weight:600;
+      letter-spacing:0.1em;text-transform:uppercase;
+      padding:10px 22px;border-radius:50px;
+      background:var(--grad-purple);color:var(--white);
+      transition:opacity 0.3s ease,transform 0.3s ease;
+    }
+    .nav-cta:hover{opacity:0.85;transform:translateY(-2px)}
+
+    /* ══════════════════════════════════════════
+       HERO — MAGAZINE COVER STYLE
+    ══════════════════════════════════════════ */
+    .blog-hero{
+      position:relative;z-index:1;
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+      padding:120px 60px 80px;
+      gap:60px;
+      overflow:hidden;
+    }
+
+    /* Diagonal divider */
+    .blog-hero::after{
+      content:'';
+      position:absolute;
+      top:0;right:40%;bottom:0;
+      width:1px;
+      background:linear-gradient(to bottom,transparent,rgba(124,58,237,0.4),rgba(245,158,11,0.3),transparent);
+      pointer-events:none;
+    }
+
+    .hero-left{
+      opacity:0;transform:translateX(-40px);
+      animation:slideRight 0.9s var(--trans) 0.2s forwards;
+    }
+
+    .blog-issue{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:0.7rem;font-weight:600;
+      letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--yellow);margin-bottom:28px;
+    }
+    .issue-dot{
+      width:6px;height:6px;border-radius:50%;
+      background:var(--yellow);
+      animation:pulse 2s ease-in-out infinite;
+    }
+
+    .hero-headline{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(3rem,6vw,5.5rem);
+      font-weight:900;
+      line-height:1.0;
+      letter-spacing:-0.02em;
+      margin-bottom:24px;
+    }
+    .hero-headline .line-1{color:var(--white)}
+    .hero-headline .line-2{
+      font-style:italic;
+      background:var(--grad-purple);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .hero-headline .line-3{
+      color:var(--yellow);
+      font-weight:400;font-style:italic;
+      font-size:0.55em;
+      display:block;margin-top:10px;
+      -webkit-text-fill-color:var(--yellow);
+    }
+
+    .hero-desc{
+      font-size:1rem;font-weight:300;
+      color:var(--muted);line-height:1.9;
+      max-width:460px;margin-bottom:36px;
+    }
+
+    .hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+    .tag{
+      padding:6px 16px;border-radius:50px;
+      font-size:0.72rem;font-weight:500;
+      letter-spacing:0.1em;text-transform:uppercase;
+      border:1px solid var(--border);
+      color:var(--purple-lt);
+      background:rgba(124,58,237,0.08);
+      transition:background 0.3s ease,border-color 0.3s ease;
+    }
+    .tag:hover{background:rgba(124,58,237,0.2);border-color:rgba(124,58,237,0.5)}
+
+    .hero-meta{
+      display:flex;align-items:center;gap:20px;
+      padding-top:32px;
+      border-top:1px solid var(--border);
+    }
+    .author-avatar{
+      width:48px;height:48px;border-radius:50%;
+      background:var(--grad-purple);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Playfair Display',serif;
+      font-size:1.1rem;font-weight:700;
+      color:var(--white);flex-shrink:0;
+    }
+    .author-info strong{
+      display:block;font-size:0.88rem;
+      font-weight:600;color:var(--white);
+    }
+    .author-info span{
+      font-size:0.75rem;color:var(--muted);
+    }
+    .read-time{
+      margin-left:auto;
+      font-size:0.72rem;font-weight:500;
+      letter-spacing:0.1em;color:var(--purple-lt);
+    }
+
+    /* Hero right — decorative card stack */
+    .hero-right{
+      position:relative;
+      opacity:0;transform:translateX(40px);
+      animation:slideLeft 0.9s var(--trans) 0.4s forwards;
+    }
+    .stat-stack{
+      display:flex;flex-direction:column;gap:16px;
+    }
+    .stat-card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px 32px;
+      display:flex;align-items:center;gap:20px;
+      transition:transform 0.35s var(--trans),border-color 0.35s ease,box-shadow 0.35s ease;
+    }
+    .stat-card:hover{
+      transform:translateX(8px);
+      border-color:rgba(124,58,237,0.45);
+      box-shadow:0 8px 40px rgba(124,58,237,0.18);
+    }
+    .stat-icon{
+      width:50px;height:50px;border-radius:14px;
+      background:var(--grad-purple);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;flex-shrink:0;
+    }
+    .stat-text strong{
+      display:block;
+      font-family:'Playfair Display',serif;
+      font-size:1.6rem;font-weight:700;
+      color:var(--white);line-height:1;
+      margin-bottom:4px;
+    }
+    .stat-text span{font-size:0.8rem;color:var(--muted)}
+    .stat-card.yellow .stat-icon{background:var(--grad-yellow)}
+    .stat-card.yellow .stat-text strong{
+      background:var(--grad-yellow);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION SHARED
+    ══════════════════════════════════════════ */
+    .section{
+      position:relative;z-index:1;
+      padding:100px 60px;
+    }
+    .section-eyebrow{
+      font-size:0.7rem;font-weight:600;
+      letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--yellow);margin-bottom:14px;
+      display:flex;align-items:center;gap:12px;
+    }
+    .section-eyebrow::after{
+      content:'';flex:1;height:1px;
+      background:linear-gradient(to right,rgba(245,158,11,0.4),transparent);
+    }
+    .section-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,3.5vw,3rem);
+      font-weight:700;line-height:1.15;
+      color:var(--white);margin-bottom:50px;
+    }
+    .section-title em{
+      font-style:italic;
+      background:var(--grad-purple);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    /* ══════════════════════════════════════════
+       ABOUT / STORY SECTION
+    ══════════════════════════════════════════ */
+    #story{background:var(--bg-2)}
+
+    .story-grid{
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:80px;align-items:start;
+    }
+
+    .story-body p{
+      font-size:1.02rem;font-weight:300;
+      color:var(--muted);line-height:1.95;
+      margin-bottom:22px;
+    }
+    .story-body p strong{color:var(--white);font-weight:600}
+
+    .pull-quote{
+      margin:36px 0;
+      padding:28px 32px;
+      border-left:3px solid var(--purple);
+      background:rgba(124,58,237,0.08);
+      border-radius:0 16px 16px 0;
+    }
+    .pull-quote p{
+      font-family:'Playfair Display',serif;
+      font-size:1.25rem;font-style:italic;
+      color:var(--offwhite);line-height:1.6;
+      margin:0 !important;
+    }
+
+    /* Sidebar */
+    .story-sidebar{
+      position:sticky;top:100px;
+      display:flex;flex-direction:column;gap:20px;
+    }
+    .sidebar-card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:18px;padding:26px 24px;
+    }
+    .sidebar-card h4{
+      font-size:0.72rem;font-weight:600;
+      letter-spacing:0.16em;text-transform:uppercase;
+      color:var(--yellow);margin-bottom:16px;
+    }
+    .sidebar-list{
+      list-style:none;display:flex;flex-direction:column;gap:10px;
+    }
+    .sidebar-list li{
+      display:flex;align-items:center;gap:10px;
+      font-size:0.85rem;color:var(--muted);
+    }
+    .sidebar-list li::before{
+      content:'';width:6px;height:6px;
+      border-radius:50%;background:var(--purple-mid);
+      flex-shrink:0;
+    }
+    .contact-pill{
+      display:flex;align-items:center;gap:10px;
+      padding:12px 16px;border-radius:12px;
+      background:rgba(124,58,237,0.1);
+      border:1px solid rgba(124,58,237,0.2);
+      font-size:0.82rem;color:var(--offwhite);
+      transition:background 0.3s ease;
+      word-break:break-all;
+    }
+    .contact-pill:hover{background:rgba(124,58,237,0.2)}
+    .contact-pill svg{flex-shrink:0;color:var(--purple-lt)}
+
+    /* ══════════════════════════════════════════
+       TIMELINE / EXPERIENCE
+    ══════════════════════════════════════════ */
+    #timeline{position:relative;z-index:1;padding:100px 60px}
+
+    .timeline{
+      position:relative;
+      max-width:860px;
+      margin:0 auto;
+    }
+    /* Vertical line */
+    .timeline::before{
+      content:'';
+      position:absolute;
+      left:28px;top:0;bottom:0;width:2px;
+      background:linear-gradient(to bottom,
+        var(--purple),rgba(124,58,237,0.2),transparent);
+    }
+
+    .tl-item{
+      display:flex;gap:40px;
+      margin-bottom:52px;
+      opacity:0;transform:translateY(30px);
+      transition:opacity 0.7s var(--trans),transform 0.7s var(--trans);
+    }
+    .tl-item.visible{opacity:1;transform:translateY(0)}
+
+    .tl-dot-wrap{
+      position:relative;flex-shrink:0;
+      width:58px;display:flex;justify-content:center;
+    }
+    .tl-dot{
+      width:16px;height:16px;border-radius:50%;
+      background:var(--grad-purple);
+      border:3px solid var(--bg);
+      box-shadow:0 0 0 3px rgba(124,58,237,0.4);
+      margin-top:6px;
+      transition:box-shadow 0.3s ease;
+    }
+    .tl-item:hover .tl-dot{
+      box-shadow:0 0 0 6px rgba(124,58,237,0.25);
+    }
+
+    .tl-body{
+      flex:1;
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px 30px;
+      transition:border-color 0.35s ease,box-shadow 0.35s ease,transform 0.35s var(--trans);
+    }
+    .tl-item:hover .tl-body{
+      border-color:rgba(124,58,237,0.4);
+      box-shadow:0 12px 40px rgba(124,58,237,0.15);
+      transform:translateX(6px);
+    }
+
+    .tl-period{
+      font-size:0.7rem;font-weight:600;
+      letter-spacing:0.18em;text-transform:uppercase;
+      color:var(--yellow);margin-bottom:8px;
+    }
+    .tl-role{
+      font-family:'Playfair Display',serif;
+      font-size:1.3rem;font-weight:700;
+      color:var(--white);margin-bottom:4px;
+    }
+    .tl-company{
+      font-size:0.82rem;color:var(--purple-lt);
+      margin-bottom:14px;font-weight:500;
+    }
+    .tl-bullets{
+      list-style:none;
+      display:flex;flex-direction:column;gap:7px;
+    }
+    .tl-bullets li{
+      font-size:0.86rem;color:var(--muted);
+      display:flex;align-items:flex-start;gap:10px;
+      line-height:1.6;
+    }
+    .tl-bullets li::before{
+      content:'→';color:var(--purple-mid);
+      flex-shrink:0;font-size:0.75rem;margin-top:3px;
+    }
+
+    /* ══════════════════════════════════════════
+       SKILLS SHOWCASE
+    ══════════════════════════════════════════ */
+    #skills{background:var(--bg-2);position:relative;z-index:1;padding:100px 60px}
+
+    .skills-showcase{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
+
+    .skill-block{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:30px 28px;
+      transition:transform 0.35s var(--trans),border-color 0.35s ease,box-shadow 0.35s ease;
+      opacity:0;transform:translateY(24px);
+      transition:opacity 0.6s var(--trans),transform 0.6s var(--trans),border-color 0.35s ease,box-shadow 0.35s ease;
+    }
+    .skill-block.visible{opacity:1;transform:translateY(0)}
+    .skill-block:hover{
+      border-color:rgba(124,58,237,0.45);
+      box-shadow:0 16px 50px rgba(124,58,237,0.18);
+      transform:translateY(-6px);
+    }
+
+    .skill-block-icon{
+      width:48px;height:48px;border-radius:14px;
+      background:var(--grad-purple);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.3rem;margin-bottom:18px;
+    }
+    .skill-block.yellow-accent .skill-block-icon{background:var(--grad-yellow)}
+
+    .skill-block h3{
+      font-family:'Playfair Display',serif;
+      font-size:1.05rem;font-weight:700;
+      color:var(--white);margin-bottom:10px;
+    }
+    .skill-block p{
+      font-size:0.82rem;color:var(--muted);
+      line-height:1.75;font-weight:300;
+    }
+
+    /* Tool pills */
+    .tool-pills{
+      display:flex;flex-wrap:wrap;gap:8px;
+      margin-top:14px;
+    }
+    .tool-pill{
+      font-size:0.68rem;font-weight:600;
+      letter-spacing:0.1em;text-transform:uppercase;
+      padding:5px 12px;border-radius:50px;
+      background:rgba(124,58,237,0.12);
+      border:1px solid rgba(124,58,237,0.25);
+      color:var(--purple-lt);
+    }
+
+    /* ══════════════════════════════════════════
+       EDUCATION + LANGUAGES STRIP
+    ══════════════════════════════════════════ */
+    .edu-strip{
+      position:relative;z-index:1;
+      padding:60px 60px;
+      display:grid;grid-template-columns:1fr 1fr;gap:24px;
+    }
+    .edu-card{
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:32px 30px;
+      display:flex;align-items:flex-start;gap:20px;
+      transition:border-color 0.3s ease,box-shadow 0.3s ease;
+    }
+    .edu-card:hover{
+      border-color:rgba(245,158,11,0.4);
+      box-shadow:0 10px 40px rgba(245,158,11,0.1);
+    }
+    .edu-icon{
+      width:44px;height:44px;border-radius:12px;
+      background:var(--grad-yellow);
+      display:flex;align-items:center;
+      justify-content:center;font-size:1.1rem;
+      flex-shrink:0;
+    }
+    .edu-info strong{
+      display:block;font-size:0.92rem;font-weight:600;
+      color:var(--white);margin-bottom:4px;
+    }
+    .edu-info span{font-size:0.8rem;color:var(--muted)}
+
+    /* Languages */
+    .lang-row{
+      display:flex;align-items:center;gap:14px;
+      flex-wrap:wrap;
+    }
+    .lang-badge{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 18px;border-radius:50px;
+      background:rgba(124,58,237,0.1);
+      border:1px solid rgba(124,58,237,0.2);
+      font-size:0.82rem;font-weight:500;
+      color:var(--offwhite);
+      transition:background 0.3s ease;
+    }
+    .lang-badge:hover{background:rgba(124,58,237,0.22)}
+    .lang-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--grad-purple);
+    }
+
+    /* ══════════════════════════════════════════
+       PORTFOLIO WORK SECTION
+    ══════════════════════════════════════════ */
+    #work{position:relative;z-index:1;padding:100px 60px;background:var(--bg-2)}
+
+    .work-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+
+    .work-card{
+      border-radius:20px;overflow:hidden;
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      cursor:pointer;
+      transition:transform 0.4s var(--trans),box-shadow 0.4s var(--trans),border-color 0.4s ease;
+    }
+    .work-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 24px 60px rgba(124,58,237,0.28);
+      border-color:rgba(124,58,237,0.45);
+    }
+    .work-thumb{
+      position:relative;aspect-ratio:16/9;
+      overflow:hidden;background:#0d0b18;
+    }
+    .work-thumb img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform 0.6s var(--trans),opacity 0.4s ease;
+      opacity:0.8;
+    }
+    .work-card:hover .work-thumb img{
+      transform:scale(1.06);opacity:1;
+    }
+    .work-play{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;transition:opacity 0.3s ease;
+    }
+    .work-card:hover .work-play{opacity:1}
+    .work-play-circle{
+      width:58px;height:58px;border-radius:50%;
+      background:linear-gradient(135deg,#5b21b6,#7c3aed,#a78bfa);
+      display:flex;align-items:center;justify-content:center;
+      transform:scale(0.85);
+      transition:transform 0.35s var(--trans);
+      box-shadow:0 8px 32px rgba(124,58,237,0.5);
+    }
+    .work-card:hover .work-play-circle{transform:scale(1)}
+    .work-badge{
+      position:absolute;top:12px;left:12px;
+      background:rgba(124,58,237,0.8);
+      color:var(--white);
+      font-size:0.62rem;font-weight:600;
+      letter-spacing:0.14em;text-transform:uppercase;
+      padding:5px 12px;border-radius:50px;
+      backdrop-filter:blur(8px);
+    }
+    .work-coming{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:8px;
+      background:linear-gradient(135deg,#1a0f2e,#2d1b69);
+    }
+    .work-body{padding:18px 20px 22px}
+    .work-body h3{
+      font-family:'Playfair Display',serif;
+      font-size:1.05rem;font-weight:700;
+      color:var(--white);margin-bottom:4px;
+    }
+    .work-body p{font-size:0.78rem;color:var(--muted)}
+
+    /* Blog modal */
+    .blog-modal-overlay{
+      position:fixed;inset:0;
+      background:rgba(7,6,15,0.92);
+      z-index:500;
+      display:flex;align-items:center;justify-content:center;
+      padding:40px 24px;
+      opacity:0;visibility:hidden;
+      transition:opacity 0.4s ease,visibility 0.4s ease;
+      backdrop-filter:blur(8px);
+    }
+    .blog-modal-overlay.active{opacity:1;visibility:visible}
+    .blog-modal-inner{
+      width:100%;max-width:920px;position:relative;
+      transform:scale(0.92) translateY(24px);
+      transition:transform 0.45s var(--trans);
+    }
+    .blog-modal-overlay.active .blog-modal-inner{transform:scale(1) translateY(0)}
+    .blog-modal-top{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:14px;
+    }
+    .blog-modal-title{
+      font-family:'Playfair Display',serif;
+      font-size:1.2rem;font-style:italic;color:var(--offwhite);
+    }
+    .blog-modal-close{
+      width:40px;height:40px;border-radius:50%;
+      border:1px solid rgba(255,255,255,0.15);
+      background:rgba(255,255,255,0.06);
+      cursor:pointer;display:flex;align-items:center;
+      justify-content:center;color:var(--white);
+      font-size:1rem;transition:background 0.3s ease,transform 0.3s ease;
+    }
+    .blog-modal-close:hover{background:rgba(255,255,255,0.15);transform:rotate(90deg)}
+    .blog-modal-video{
+      width:100%;aspect-ratio:16/9;
+      border-radius:16px;overflow:hidden;background:#000;
+    }
+    .blog-modal-video iframe{width:100%;height:100%;border:none}
+
+    @media(max-width:1024px){.work-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){
+      #work{padding-left:24px;padding-right:24px}
+      .work-grid{grid-template-columns:1fr}
+    }
+
+    /* ══════════════════════════════════════════
+       CTA SECTION
+    ══════════════════════════════════════════ */
+    .cta-section{
+      position:relative;z-index:1;
+      margin:0 40px 80px;
+      border-radius:28px;
+      padding:90px 80px;
+      background:var(--bg-2);
+      border:1px solid var(--border);
+      text-align:center;
+      overflow:hidden;
+    }
+    .cta-section::before{
+      content:'';
+      position:absolute;
+      width:600px;height:400px;
+      border-radius:50%;
+      background:radial-gradient(ellipse,rgba(124,58,237,0.14),transparent 70%);
+      top:-150px;left:50%;transform:translateX(-50%);
+      pointer-events:none;
+    }
+    .cta-section::after{
+      content:'';
+      position:absolute;
+      width:400px;height:300px;
+      border-radius:50%;
+      background:radial-gradient(ellipse,rgba(245,158,11,0.08),transparent 70%);
+      bottom:-100px;right:10%;
+      pointer-events:none;
+    }
+    .cta-eyebrow{
+      font-size:0.7rem;font-weight:600;
+      letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--yellow);margin-bottom:18px;
+    }
+    .cta-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,4vw,3.5rem);
+      font-weight:900;line-height:1.1;
+      color:var(--white);margin-bottom:18px;
+    }
+    .cta-title em{
+      font-style:italic;
+      background:var(--grad-purple);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .cta-sub{
+      font-size:1rem;font-weight:300;
+      color:var(--muted);max-width:480px;
+      margin:0 auto 48px;line-height:1.8;
+    }
+    .cta-buttons{
+      display:flex;justify-content:center;
+      gap:16px;flex-wrap:wrap;
+    }
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 36px;border-radius:50px;
+      font-size:0.85rem;font-weight:600;
+      letter-spacing:0.08em;text-transform:uppercase;
+      background:var(--grad-yellow);
+      color:#1a0e00;
+      transition:transform 0.3s ease,box-shadow 0.3s ease;
+    }
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 40px rgba(245,158,11,0.35);
+    }
+    .btn-secondary{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 36px;border-radius:50px;
+      font-size:0.85rem;font-weight:600;
+      letter-spacing:0.08em;text-transform:uppercase;
+      background:var(--grad-purple);
+      color:var(--white);
+      transition:transform 0.3s ease,box-shadow 0.3s ease,opacity 0.3s ease;
+    }
+    .btn-secondary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 40px rgba(124,58,237,0.4);
+      opacity:0.9;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    footer{
+      position:relative;z-index:1;
+      text-align:center;
+      padding:32px 60px;
+      border-top:1px solid var(--border);
+      font-size:0.78rem;color:rgba(196,181,253,0.5);
+      letter-spacing:0.06em;
+    }
+
+    /* ══════════════════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════════════════ */
+    @keyframes slideRight{
+      to{opacity:1;transform:translateX(0)}
+    }
+    @keyframes slideLeft{
+      to{opacity:1;transform:translateX(0)}
+    }
+    @keyframes pulse{
+      0%,100%{opacity:1;transform:scale(1)}
+      50%{opacity:0.5;transform:scale(0.8)}
+    }
+    @keyframes fadeUp{
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .reveal{
+      opacity:0;transform:translateY(32px);
+      transition:opacity 0.8s var(--trans),transform 0.8s var(--trans);
+    }
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .delay-1{transition-delay:0.1s}
+    .delay-2{transition-delay:0.2s}
+    .delay-3{transition-delay:0.3s}
+    .delay-4{transition-delay:0.4s}
+    .delay-5{transition-delay:0.5s}
+    .delay-6{transition-delay:0.6s}
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media(max-width:1024px){
+      .blog-hero{grid-template-columns:1fr;min-height:auto;padding-top:100px}
+      .blog-hero::after{display:none}
+      .story-grid{grid-template-columns:1fr}
+      .skills-showcase{grid-template-columns:1fr 1fr}
+      .edu-strip{grid-template-columns:1fr}
+      .story-sidebar{position:static}
+    }
+    @media(max-width:768px){
+      nav{padding:16px 24px}
+      .nav-right .nav-link{display:none}
+      .section,.blog-hero,#timeline,#skills,.edu-strip{padding-left:24px;padding-right:24px}
+      .skills-showcase{grid-template-columns:1fr}
+      .cta-section{margin:0 16px 60px;padding:60px 32px}
+      footer{padding:24px}
+      .timeline::before{left:20px}
+      .tl-dot-wrap{width:42px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Glow orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- ── NAV ─────────────────────────────────────── -->
+  <nav>
+    <div class="nav-logo">Daniel <span>Praveen.</span></div>
+    <div class="nav-right">
+      <a href="#story" class="nav-link">About</a>
+      <a href="#timeline" class="nav-link">Experience</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#work" class="nav-link">Work</a>
+      <a href="mailto:praveen.danniel@gmail.com" class="nav-cta">Hire Me</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ────────────────────────────────────── -->
+  <section class="blog-hero">
+    <div class="hero-left">
+      <div class="blog-issue">
+        <div class="issue-dot"></div>
+        Creative Portfolio · Est. 2018
+      </div>
+
+      <h1 class="hero-headline">
+        <span class="line-1">Daniel Praveen</span><br/>
+        <span class="line-2">Bejjipalli</span>
+        <span class="line-3">Video Editor & Motion Graphics Designer</span>
+      </h1>
+
+      <p class="hero-desc">
+        5+ years of crafting high-converting ad creatives, brand visuals, and scroll-stopping content that drives real engagement across social media and performance marketing campaigns.
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag">Motion Graphics</span>
+        <span class="tag">Video Editing</span>
+        <span class="tag">Ad Creatives</span>
+        <span class="tag">Color Grading</span>
+        <span class="tag">Reels</span>
+      </div>
+
+      <div class="hero-meta">
+        <div class="author-avatar">DP</div>
+        <div class="author-info">
+          <strong>Daniel Praveen Bejjipalli</strong>
+          <span>Adbuffs Media · Visakhapatnam, Andhra Pradesh</span>
+        </div>
+        <div class="read-time">📞 +91 83330 77658</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-stack">
+        <div class="stat-card">
+          <div class="stat-icon">🎬</div>
+          <div class="stat-text">
+            <strong>5+</strong>
+            <span>Years of Professional Experience</span>
+          </div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-icon">✨</div>
+          <div class="stat-text">
+            <strong>100+</strong>
+            <span>Brand Campaigns Delivered</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🚀</div>
+          <div class="stat-text">
+            <strong>3</strong>
+            <span>Companies · 2018 to Present</span>
+          </div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-icon">🛠</div>
+          <div class="stat-text">
+            <strong>7+</strong>
+            <span>Industry-Standard Tools Mastered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STORY / ABOUT ──────────────────────────── -->
+  <section class="section" id="story">
+    <div class="section-eyebrow reveal">Who I Am</div>
+    <h2 class="section-title reveal delay-1">The Story Behind<br/><em>the Frames</em></h2>
+
+    <div class="story-grid">
+      <div class="story-body">
+        <p class="reveal delay-1">
+          I'm <strong>Daniel Praveen Bejjipalli</strong> — a Creative Video Editor and Motion Graphics Designer based in Visakhapatnam, Andhra Pradesh. I started my journey in 2018 with a passion for brand storytelling and visual communication, and I've never looked back.
+        </p>
+        <p class="reveal delay-2">
+          What began at <strong>Oppo Mobiles</strong> as an Assistant Branding Manager shaped my understanding of how visuals drive perception. Moving into video editing and motion graphics, I grew through <strong>Sanghamitra Media</strong> where I managed full production pipelines — from shoot planning to final delivery.
+        </p>
+
+        <div class="pull-quote reveal delay-3">
+          <p>"Every frame is a decision. Every cut is an intention. I don't just edit videos — I craft experiences that make people stop scrolling and start feeling."</p>
+        </div>
+
+        <p class="reveal delay-4">
+          Today, at <strong>Adbuffs Media</strong>, I create high-converting ad creatives and motion graphics optimised for performance marketing. Working under tight deadlines across multiple brand campaigns, I've developed a discipline for fast, high-quality output without compromising creative depth.
+        </p>
+        <p class="reveal delay-5">
+          My work combines <strong>strong storytelling</strong>, sharp typography, fluid motion design, and cinematic colour grading — all in service of one goal: content that converts and captivates.
+        </p>
+      </div>
+
+      <div class="story-sidebar">
+        <!-- Contact card -->
+        <div class="sidebar-card reveal delay-2">
+          <h4>Contact</h4>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="mailto:praveen.danniel@gmail.com" class="contact-pill">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4L8 9L14 4M2 4H14V12H2V4Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              praveen.danniel@gmail.com
+            </a>
+            <a href="tel:+918333077658" class="contact-pill">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 2h3l1.5 3.5-1.75 1.25C6.5 8.5 7.5 9.5 9.25 10.25L10.5 8.5 14 10v3c0 .55-4.5 2-10-3.5S1.45 2.55 3 2Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              +91 83330 77658
+            </a>
+            <a href="https://www.linkedin.com/in/daniel-praveen" target="_blank" class="contact-pill">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M5.5 7v3.5M5.5 5.5v.01M8 10.5V8.25C8 7.56 8.56 7 9.25 7h.25C10.22 7 11 7.78 11 8.75V10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              LinkedIn Profile
+            </a>
+          </div>
+        </div>
+
+        <!-- Skills snapshot -->
+        <div class="sidebar-card reveal delay-3">
+          <h4>Core Skills</h4>
+          <ul class="sidebar-list">
+            <li>Video Editing (Ads, Reels, Performance)</li>
+            <li>Motion Graphics & Animation</li>
+            <li>Typography & Visual Design</li>
+            <li>Color Grading & Storytelling</li>
+            <li>Fast Delivery & High Output</li>
+          </ul>
+        </div>
+
+        <!-- Tools snapshot -->
+        <div class="sidebar-card reveal delay-4">
+          <h4>Tools</h4>
+          <ul class="sidebar-list">
+            <li>Adobe After Effects</li>
+            <li>Adobe Premiere Pro</li>
+            <li>DaVinci Resolve</li>
+            <li>Photoshop & Illustrator</li>
+            <li>CapCut Pro · Canva Pro</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE TIMELINE ────────────────────── -->
+  <section id="timeline" style="position:relative;z-index:1;padding:100px 60px">
+    <div class="section-eyebrow reveal">Career Journey</div>
+    <h2 class="section-title reveal delay-1">Where I've <em>Built My Craft</em></h2>
+
+    <div class="timeline">
+
+      <!-- Job 1 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-period">Oct 2022 — Present · 2026</div>
+          <div class="tl-role">Motion Graphic Designer</div>
+          <div class="tl-company">Adbuffs Media · Remote (Visakhapatnam)</div>
+          <ul class="tl-bullets">
+            <li>Created high-converting ad creatives and reel videos for multiple brands</li>
+            <li>Delivered fast, high-quality outputs consistently under tight deadlines</li>
+            <li>Designed motion graphics optimised for performance marketing campaigns</li>
+            <li>Collaborated with creative and marketing teams to improve campaign results</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-period">2019 — Oct 2022</div>
+          <div class="tl-role">Video Editor & Ad Production</div>
+          <div class="tl-company">Sanghamitra Media · Digital Marketing</div>
+          <ul class="tl-bullets">
+            <li>Edited promotional videos and social media campaigns across industries</li>
+            <li>Managed end-to-end production — shoot planning to final delivery</li>
+            <li>Produced engaging ad creatives that improved brand visibility</li>
+            <li>Worked on multiple brand campaigns with cross-functional teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-period">2017 — 2018</div>
+          <div class="tl-role">Assistant Branding Manager</div>
+          <div class="tl-company">Oppo Mobiles</div>
+          <ul class="tl-bullets">
+            <li>Executed indoor & outdoor branding campaigns nationwide</li>
+            <li>Designed promotional materials and branding assets</li>
+            <li>Coordinated marketing activities to enhance brand presence & visibility</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SKILLS ─────────────────────────────────── -->
+  <section id="skills" class="section">
+    <div class="section-eyebrow reveal">What I Do</div>
+    <h2 class="section-title reveal delay-1">Skills & <em>Expertise</em></h2>
+
+    <div class="skills-showcase">
+      <div class="skill-block reveal delay-1">
+        <div class="skill-block-icon">🎬</div>
+        <h3>Video Editing</h3>
+        <p>Ads, reels, and performance marketing content crafted to stop the scroll and drive conversions.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">Premiere Pro</span>
+          <span class="tool-pill">DaVinci</span>
+          <span class="tool-pill">CapCut Pro</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal delay-2">
+        <div class="skill-block-icon">✨</div>
+        <h3>Motion Graphics</h3>
+        <p>Kinetic typography, animated assets, and fluid transitions that bring brand stories to life.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">After Effects</span>
+          <span class="tool-pill">Illustrator</span>
+        </div>
+      </div>
+
+      <div class="skill-block yellow-accent reveal delay-3">
+        <div class="skill-block-icon">🎨</div>
+        <h3>Color Grading</h3>
+        <p>Cinematic colour work and mood-driven grading that gives every project a signature visual feel.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">DaVinci Resolve</span>
+          <span class="tool-pill">Premiere</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal delay-4">
+        <div class="skill-block-icon">🖋</div>
+        <h3>Typography & Design</h3>
+        <p>Layout and type-led design that makes brand communication clear, bold, and unforgettable.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">Photoshop</span>
+          <span class="tool-pill">Canva Pro</span>
+        </div>
+      </div>
+
+      <div class="skill-block yellow-accent reveal delay-5">
+        <div class="skill-block-icon">📱</div>
+        <h3>Social Media Content</h3>
+        <p>Platform-optimised reels, stories, and ad creatives tailored for Instagram, YouTube, and more.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">Reels</span>
+          <span class="tool-pill">Shorts</span>
+          <span class="tool-pill">Stories</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal delay-6">
+        <div class="skill-block-icon">⚡</div>
+        <h3>Fast Delivery</h3>
+        <p>Proven ability to produce high-quality output under tight deadlines without cutting creative corners.</p>
+        <div class="tool-pills">
+          <span class="tool-pill">Quick Turnaround</span>
+          <span class="tool-pill">Multi-Brand</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION + LANGUAGES ──────────────────── -->
+  <div class="edu-strip">
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-info">
+        <strong>MBA — Andhra University</strong>
+        <span>Samata Degree & PG College · 2017</span>
+        <div style="margin-top:10px">
+          <strong>B.Com Computers — Andhra University</strong>
+          <span>TSR & TBK Degree College · 2015</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-card reveal delay-2">
+      <div class="edu-icon">🌐</div>
+      <div class="edu-info">
+        <strong style="margin-bottom:16px;display:block">Languages</strong>
+        <div class="lang-row">
+          <div class="lang-badge"><div class="lang-dot"></div>Telugu — Fluent</div>
+          <div class="lang-badge"><div class="lang-dot"></div>English — Fluent</div>
+          <div class="lang-badge"><div class="lang-dot"></div>Hindi — Conversational</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PORTFOLIO WORK ─────────────────────────── -->
+  <section id="work">
+    <div class="section-eyebrow reveal">Selected Work</div>
+    <h2 class="section-title reveal delay-1">Brand Reels &amp; <em>Image Creatives</em></h2>
+
+    <div class="work-grid">
+
+      <!-- Work 1 — Real video -->
+      <div class="work-card reveal delay-1"
+           data-video-id="1eglA3eCb6By-0eZKoXPbjGhqjDOyjgDF"
+           data-title="Brand Promotional Reel #1"
+           onclick="openBlogModal(this)">
+        <div class="work-thumb">
+          <img src="https://drive.google.com/thumbnail?id=1eglA3eCb6By-0eZKoXPbjGhqjDOyjgDF&sz=w800" alt="Brand Promotional Reel #1"/>
+          <span class="work-badge">Brand Reel</span>
+          <div class="work-play">
+            <div class="work-play-circle">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M5 3.5L14.5 9L5 14.5V3.5Z" fill="#fff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3>Brand Promotional Reel #1</h3>
+          <p>Brand Creative · Promotional</p>
+        </div>
+      </div>
+
+      <!-- Work 2 — Real video -->
+      <div class="work-card reveal delay-2"
+           data-video-id="1nDoLFD96BDK5H-QZ7tDBb_jQpEbJjaOW"
+           data-title="Brand Promotional Reel #2"
+           onclick="openBlogModal(this)">
+        <div class="work-thumb">
+          <img src="https://drive.google.com/thumbnail?id=1nDoLFD96BDK5H-QZ7tDBb_jQpEbJjaOW&sz=w800" alt="Brand Promotional Reel #2"/>
+          <span class="work-badge">Image Creative</span>
+          <div class="work-play">
+            <div class="work-play-circle">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M5 3.5L14.5 9L5 14.5V3.5Z" fill="#fff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3>Brand Promotional Reel #2</h3>
+          <p>Image Creative · Brand Content</p>
+        </div>
+      </div>
+
+      <!-- Work 3 — Real video -->
+      <div class="work-card reveal delay-3"
+           data-video-id="1eFQiAnY6B9az5sydj1mut3lEEj8SAneX"
+           data-title="Brand Promotional Reel #3"
+           onclick="openBlogModal(this)">
+        <div class="work-thumb">
+          <img src="https://drive.google.com/thumbnail?id=1eFQiAnY6B9az5sydj1mut3lEEj8SAneX&sz=w800" alt="Brand Promotional Reel #3"/>
+          <span class="work-badge">Best Work</span>
+          <div class="work-play">
+            <div class="work-play-circle">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M5 3.5L14.5 9L5 14.5V3.5Z" fill="#fff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3>Brand Promotional Reel #3</h3>
+          <p>Promotional · Best of All Time</p>
+        </div>
+      </div>
+
+      <!-- Work 4–6 — Coming soon placeholders -->
+      <div class="work-card reveal delay-4">
+        <div class="work-thumb">
+          <div class="work-coming">
+            <span style="font-size:2rem">🎬</span>
+            <span style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(196,181,253,0.55)">Coming Soon</span>
+          </div>
+          <span class="work-badge">Motion Graphics</span>
+        </div>
+        <div class="work-body">
+          <h3>Motion Graphics Reel</h3>
+          <p>Animation · Coming soon</p>
+        </div>
+      </div>
+
+      <div class="work-card reveal delay-5">
+        <div class="work-thumb">
+          <div class="work-coming">
+            <span style="font-size:2rem">✨</span>
+            <span style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(196,181,253,0.55)">Coming Soon</span>
+          </div>
+          <span class="work-badge">Fashion</span>
+        </div>
+        <div class="work-body">
+          <h3>Fashion Film</h3>
+          <p>Editorial · Coming soon</p>
+        </div>
+      </div>
+
+      <div class="work-card reveal delay-6">
+        <div class="work-thumb">
+          <div class="work-coming">
+            <span style="font-size:2rem">🚀</span>
+            <span style="font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(196,181,253,0.55)">Coming Soon</span>
+          </div>
+          <span class="work-badge">Ad Creative</span>
+        </div>
+        <div class="work-body">
+          <h3>Performance Ad</h3>
+          <p>Ad Creative · Coming soon</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Blog Video Modal -->
+  <div class="blog-modal-overlay" id="blogModal" onclick="handleBlogOverlay(event)">
+    <div class="blog-modal-inner">
+      <div class="blog-modal-top">
+        <div class="blog-modal-title" id="blogModalTitle">—</div>
+        <button class="blog-modal-close" onclick="closeBlogModal()" aria-label="Close">✕</button>
+      </div>
+      <div class="blog-modal-video">
+        <iframe id="blogModalIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ────────────────────────────────────── -->
+  <div class="cta-section reveal">
+    <div class="cta-eyebrow">Open for Projects</div>
+    <h2 class="cta-title">Let's Create Something<br/><em>Unforgettable.</em></h2>
+    <p class="cta-sub">
+      Whether it's a high-converting ad, a cinematic brand film, or a scroll-stopping reel — I'm ready to bring your vision to life.
+    </p>
+    <div class="cta-buttons">
+      <a href="mailto:praveen.danniel@gmail.com" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 4L8 9L14 4M2 4H14V12H2V4Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Email Me
+      </a>
+      <a href="tel:+918333077658" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 2h3l1.5 3.5-1.75 1.25C6.5 8.5 7.5 9.5 9.25 10.25L10.5 8.5 14 10v3c0 .55-4.5 2-10-3.5S1.45 2.55 3 2Z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Call Me
+      </a>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <footer>
+    © 2026 Daniel Praveen Bejjipalli — Motion Graphic Designer & Video Editor · Visakhapatnam, Andhra Pradesh
+  </footer>
+
+  <!-- ── JS: Scroll Reveal ──────────────────────── -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .tl-item, .skill-block').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+  <!-- Blog Modal JS -->
+  <script>
+    function openBlogModal(card) {
+      const fileId = card.dataset.videoId;
+      const title  = card.dataset.title;
+      document.getElementById('blogModalIframe').src =
+        `https://drive.google.com/file/d/${fileId}/preview`;
+      document.getElementById('blogModalTitle').textContent = title;
+      document.getElementById('blogModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBlogModal() {
+      document.getElementById('blogModal').classList.remove('active');
+      setTimeout(() => { document.getElementById('blogModalIframe').src = ''; }, 400);
+      document.body.style.overflow = '';
+    }
+    function handleBlogOverlay(e) {
+      if (e.target === document.getElementById('blogModal')) closeBlogModal();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBlogModal(); });
+  </script>
+
+</body>
+</html>
